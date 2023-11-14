@@ -29,6 +29,7 @@ class Lag(BaseEstimator, TransformerMixin):
             whether to shift the data n_periods once (generating only one column), or to generate
             multiple columns (one per period step), ascending from 1 to n_periods.
         """
+        # todo saving last rows from training data and using them in testing data
 
         assert n_periods > 0, "n_periods must be greater than 0!"
 
@@ -103,7 +104,6 @@ class Lag(BaseEstimator, TransformerMixin):
 
 def lag_test() -> None:
     import pandas as pd
-
     X = pd.DataFrame(dict(date=["2022-09-18",
                                 "2022-09-19",
                                 "2022-09-20",
@@ -112,6 +112,7 @@ def lag_test() -> None:
                           x1=[1, 2, 3, 4, 5],
                           x2=[6, 7, 8, 9, 10]
                           ))
+
     lag_transformer = Lag(n_periods=2,
                           shift_columns=["x1", "x2"],
                           drop_na_rows=False,
